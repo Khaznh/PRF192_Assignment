@@ -4,11 +4,11 @@
 
 
 struct drink {
-    unsigned int id;
+    char *id;
     char *name;
     char *type;
     char *unit;
-    unsigned int price;
+    unsigned long price;
 };
 
 struct drink data[50];
@@ -20,12 +20,12 @@ int drinks_count = 0;
 // ---------------------------------------------
 
 
-void input_drink(unsigned int id, char *name, char *type, char *unit, unsigned int price) {
+void input_drink(char *id, char *name, char *type, char *unit, unsigned long price) {
     int i;
     for (i = 0; i < drinks_count; i++)
     {
-        if (data[i].id == id) {
-            printf("A drink with id: %d already exists, try another id.", id);
+        if (strcmp(data[i].id, id) == 0) {
+            printf("A drink with id: %s already exists, try another id.", id);
             return;
         }
     }
@@ -43,7 +43,7 @@ void input_drink(unsigned int id, char *name, char *type, char *unit, unsigned i
 }
 
 void print_a_drink(struct drink d) {
-    printf("[%d] %s (%s) - %dd\n", d.id, d.name, d.type, d.price);
+    printf("[%s] %s (%s) - %ldd\n", d.id, d.name, d.type, d.price);
 }
 
 void print_list() {
@@ -57,20 +57,62 @@ void print_list() {
     printf("\n");
 }
 
-void delete_a_drink(unsigned int id) {
+void delete_a_drink(char *id) {
     int i, j;
     for (i = 0; i < drinks_count; i++)
     {
-        if (data[i].id == id) {
+        if (strcmp(data[i].id, id) == 0) {
             for (j=i; j<drinks_count-1; j++) {
                 data[j] = data[j+1];
             }
             drinks_count--;
 
         }
-    }
-    
+    }    
 }
+
+void modify_name(char *id, char *new_name) {
+    int i;
+    int ok = 0;
+    int index;
+    for (i = 0; i < drinks_count; i++)
+    {
+        if (strcmp(data[i].id, id) == 0) {
+            ok = 1;
+            index = i;
+        }
+    }
+
+    if (!ok) {
+        printf("Drink with ID: %s not found.\n", id);
+        return;
+    }
+
+    data[index].name = new_name;
+}
+
+
+void modify_price(char *id, unsigned long new_price) {
+    int i;
+    int ok = 0;
+    int index;
+    for (i = 0; i < drinks_count; i++)
+    {
+        if (strcmp(data[i].id, id) == 0) {
+            ok = 1;
+            index = i;
+        }
+    }
+
+    if (!ok) {
+        printf("Drink with ID: %s not found.\n", id);
+        return;
+    }
+
+    data[index].price = new_price;
+}
+
+
 
 
 // ---------------------------------------------
@@ -130,7 +172,7 @@ void sort_by_id() {
     for (i = 0; i < drinks_count; i++)
     {
         for (j = i+1; j<drinks_count; j++) {
-            if (data[i].id > data[j].id) {
+            if (strcmp(data[i].id, data[j].id) > 0) {
                 t = data[i];
                 data[i] = data[j];
                 data[j] = t;
@@ -144,7 +186,7 @@ void sort_by_id() {
 // searches
 // ---------------------------------------------
 
-void search_by_price_range(unsigned int min, unsigned int max) {
+void search_by_price_range(unsigned long min, unsigned long max) {
     sort_by_price();
     int i;
     for (i = 0; i < drinks_count; i++)
@@ -155,9 +197,9 @@ void search_by_price_range(unsigned int min, unsigned int max) {
     }
 }
 
-unsigned int get_average_price() {
+unsigned long get_average_price() {
     int i;
-    int sum = 0;
+    unsigned long sum = 0;
     for (i = 0; i < drinks_count; i++)
     {
         sum += data[i].price;
@@ -166,9 +208,9 @@ unsigned int get_average_price() {
     
 }
 
-unsigned int get_highest_price() {
+unsigned long get_highest_price() {
     int i;
-    int max = 0;
+    long max = 0;
     for (i = 0; i < drinks_count; i++)
     {
         if (data[i].price > max) max = data[i].price;
@@ -176,9 +218,9 @@ unsigned int get_highest_price() {
     return max;
 }
 
-unsigned int get_lowest_price() {
+unsigned long get_lowest_price() {
     int i;
-    int min = 99999999;
+    long min = 99999999;
     for (i = 0; i < drinks_count; i++)
     {
         if (data[i].price < min) min = data[i].price;
@@ -194,11 +236,12 @@ unsigned int get_lowest_price() {
 //
 // ---------------------------------------------
 int main() {
-    input_drink(12, "nuoc suoi", "water", "ml", 9000);
-    input_drink(13, "tra sua tran chau", "boba", "ml", 30000);
-    input_drink(11, "den da khong duong", "coffee", "ml", 20000);
-    input_drink(14, "ca phe sua", "coffee", "ml", 25000);
+    input_drink("WT0001", "nuoc suoi", "water", "ml", 9000);
+    input_drink("BB0001", "tra sua tran chau", "boba", "ml", 3000000);
+    input_drink("CF0001", "den da khong duong", "coffee", "ml", 20000);
+    input_drink("CF0002", "ca phe sua", "coffee", "ml", 25000);
     print_list();
-    delete_a_drink(11);
+    modify_name("WT0001", "nuoc loc");
+    modify_price("BB0001", 30000);
     print_list();
 }
