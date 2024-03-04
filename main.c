@@ -234,11 +234,6 @@ unsigned long get_lowest_price() {
 // ---------------------------------------------
 int main() {
 
-    input_drink("123", "123", "123", "123", 123);
-    input_drink("234", "234", "234", "234", 234);
-    input_drink("345", "345", "345", "345", 345);
-       
-    
     int userChoice;
     char idWater[50];
     char nameWater[50];
