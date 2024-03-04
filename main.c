@@ -59,6 +59,7 @@ void print_list() {
 
 void delete_a_drink(char *id) {
     int i, j;
+    int isHave = 1;
     for (i = 0; i < drinks_count; i++)
     {
         if (strcmp(data[i].id, id) == 0) {
@@ -66,8 +67,13 @@ void delete_a_drink(char *id) {
                 data[j] = data[j+1];
             }
             drinks_count--;
+            isHave = 0;
         }
     }    
+    while (isHave) {
+        printf("No ID container\n");
+        break;
+    }  
 }
 
 void modify_name(char *id, char *new_name) {
