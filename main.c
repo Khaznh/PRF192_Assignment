@@ -4,10 +4,10 @@
 
 
 struct drink {
-    char *id;
-    char *name;
-    char *type;
-    char *unit;
+    char id[50];
+    char name[100];
+    char type[50];
+    char unit[50];
     unsigned long price;
 };
 
@@ -25,32 +25,30 @@ void input_drink(char *id, char *name, char *type, char *unit, unsigned long pri
     for (i = 0; i < drinks_count; i++)
     {
         if (strcmp(data[i].id, id) == 0) {
-            printf("A drink with id: %s already exists, try another id.", id);
+            printf("A drink with id: %s already exists, try another id.\n", id);
             return;
         }
     }
-    
-    
-    struct drink new = {
-        id,
-        name,
-        type,
-        unit,
-        price
-    };
+        
+    struct drink new;
+    strcpy(new.id, id);
+    strcpy(new.name, name);
+    strcpy(new.type, type);
+    strcpy(new.unit, unit);
+    new.price = price;
+
     data[drinks_count] = new;
     drinks_count++;
 }
 
 void print_a_drink(struct drink d) {
-    printf("[%s] %s (%s) - %ldd\n", d.id, d.name, d.type, d.price);
+    printf("%-10s %-20s %-10s %-10s %lud\n", d.id, d.name, d.type, d.unit, d.price);
 }
 
-void print_list() {
-    printf("\n");
+void print_list() {    
     int i;
     for (i = 0; i < drinks_count; i++)
-    {
+    {        
         struct drink d = data[i];
         print_a_drink(d);
     }
@@ -60,14 +58,14 @@ void print_list() {
 void delete_a_drink(char *id) {
     int i, j;
     for (i = 0; i < drinks_count; i++)
-    {
+    {        
         if (strcmp(data[i].id, id) == 0) {
             for (j=i; j<drinks_count-1; j++) {
                 data[j] = data[j+1];
             }
             drinks_count--;
         }
-    }    
+    }
 }
 
 void modify_name(char *id, char *new_name) {
@@ -87,7 +85,7 @@ void modify_name(char *id, char *new_name) {
         return;
     }
 
-    data[index].name = new_name;
+    strcpy(data[index].name, new_name);
 }
 
 
@@ -235,6 +233,11 @@ unsigned long get_lowest_price() {
 //
 // ---------------------------------------------
 int main() {
+
+    input_drink("123", "123", "123", "123", 123);
+    input_drink("234", "234", "234", "234", 234);
+    input_drink("345", "345", "345", "345", 345);
+       
     
     int userChoice;
     char idWater[50];
@@ -242,8 +245,7 @@ int main() {
     char typeWater[50];
     char unitWater[50];
     unsigned long priceWater;
-    
-    do { 
+    do {
         printf("=============== MENU ==============\n");
         printf("1. Nhap thong tin do uong\n");
         printf("2. Sua thong tin Gia tien cua do uong\n");
@@ -258,53 +260,56 @@ int main() {
         scanf("%d",&userChoice);
         getchar();
 
-        switch (userChoice) {
-                case 1:
+        switch (userChoice) {            
+            case 1:
+                printf("Nhap thong tin do uong:\n");
+                printf("ID: ");
+                gets(idWater);
 
-                    printf("Nhap thong tin do uong:\n");
-                    printf("ID: ");
-                    scanf("%s", idWater);
-                    getchar();
+                printf("Name: ");
+                gets(nameWater);
 
-                    printf("Name: ");
-                    gets(nameWater);
+                printf("Type: ");
+                gets(typeWater);
 
-                    printf("Type: ");
-                    gets(typeWater);
+                printf("Unit: ");
+                gets(unitWater);
 
-                    printf("Unit: ");
-                    gets(unitWater);
+                printf("Price: ");
+                scanf("%lu", &priceWater);
+                getchar();
 
-                    printf("Price: ");
-                    scanf("%lu", &priceWater);
+                idWater[strcspn(idWater, "\n")] = '\0'; // Remove the newline character
+                nameWater[strcspn(nameWater, "\n")] = '\0';
+                typeWater[strcspn(typeWater, "\n")] = '\0';
+                unitWater[strcspn(unitWater, "\n")] = '\0';
+                input_drink(idWater, nameWater, typeWater, unitWater, priceWater);
 
-                    input_drink(idWater, nameWater, typeWater, unitWater, priceWater);
-
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break; 
-                case 4:
-                    printf("Nhap ma do uong muon xoa:\n");
-                    printf("ID: ");
-                    scanf("%s", idWater);
-                    getchar();
-                    delete_a_drink(idWater);
-                    break;
-                case 5:
-                    break;
-                case 7:
-                    print_list();
-                    break;
-                case 0:
-                    printf("Ban da thoat khoi chuong trinh");
-                    break;    
-			    default:
-	                printf("Sai chuc nang, vui long chon lai!\n");
-			        break;
+                break;
+            case 2:
+                break;
+            case 3:
+                break; 
+            case 4:
+                printf("Nhap ma do uong muon xoa:\n");
+                printf("ID: ");
+                scanf("%s", idWater);
+                getchar();
+                delete_a_drink(idWater);
+                break;
+            case 5:
+                break;
+            case 7:
+                print_list();
+                break;
+            case 0:
+                printf("Ban da thoat khoi chuong trinh");
+                break;    
+            default:
+                printf("Sai chuc nang, vui long chon lai!\n");
+                break;
         }
-    }while (userChoice); 
+    } while (userChoice);
     
     getchar();
     getchar();
