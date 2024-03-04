@@ -286,6 +286,11 @@ int main() {
                 case 3:
                     break; 
                 case 4:
+                    printf("Nhap ma do uong muon xoa:\n");
+                    printf("ID: ");
+                    scanf("%s", idWater);
+                    getchar();
+                    delete_a_drink(idWater);
                     break;
                 case 5:
                     break;
