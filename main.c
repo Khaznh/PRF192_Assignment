@@ -235,12 +235,74 @@ unsigned long get_lowest_price() {
 //
 // ---------------------------------------------
 int main() {
-    input_drink("WT0001", "nuoc suoi", "water", "ml", 9000);
-    input_drink("BB0001", "tra sua tran chau", "boba", "ml", 3000000);
-    input_drink("CF0001", "den da khong duong", "coffee", "ml", 20000);
-    input_drink("CF0002", "ca phe sua", "coffee", "ml", 25000);
-    print_list();
-    modify_name("WT0001", "nuoc loc");
-    modify_price("BB0001", 30000);
-    print_list();
+    
+    int userChoice;
+    char idWater[50];
+    char nameWater[50];
+    char typeWater[50];
+    char unitWater[50];
+    unsigned long priceWater;
+    
+    do { 
+        printf("=============== MENU ==============\n");
+        printf("1. Nhap thong tin do uong\n");
+        printf("2. Sua thong tin Gia tien cua do uong\n");
+        printf("3. Sua thong tin Ten do uong\n");
+        printf("4. Xoa thong tin\n");
+        printf("5. Sap xep theo danh sach giam dan theo Loai do uong\n");
+        printf("6. Sap xep theo danh sach tang dan theo gia tien\n");
+        printf("7. Xoat toan bo danh sach\n");
+        printf("0. Thoat chuong trinh\n");
+        printf("\nBan chon ? ");
+        
+        scanf("%d",&userChoice);
+        getchar();
+
+        switch (userChoice) {
+                case 1:
+
+                    printf("Nhap thong tin do uong:\n");
+                    printf("ID: ");
+                    scanf("%s", idWater);
+                    getchar();
+
+                    printf("Name: ");
+                    gets(nameWater);
+
+                    printf("Type: ");
+                    gets(typeWater);
+
+                    printf("Unit: ");
+                    gets(unitWater);
+
+                    printf("Price: ");
+                    scanf("%lu", &priceWater);
+
+                    input_drink(idWater, nameWater, typeWater, unitWater, priceWater);
+
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break; 
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 7:
+                    print_list();
+                    break;
+                case 0:
+                    printf("Ban da thoat khoi chuong trinh");
+                    break;    
+			    default:
+	                printf("Sai chuc nang, vui long chon lai!\n");
+			        break;
+        }
+    }while (userChoice); 
+    
+    getchar();
+    getchar();
+    return 0;
 }
+
