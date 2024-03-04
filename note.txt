@@ -1,0 +1,79 @@
+Document
+
+tôi sẽ cố giải thích code ở file này:
+
+
++ biến data ở dòng 14 là 1 array, mỗi phần tử trong mảng chứa 1 "struct drink"
++ biến drinks_count đánh dấu số lượng phần tử có trong data, biến này khá quan trọng vì
+nếu mình sửa dữ liệu trong data mà quên ko ++ hay -- drinks_count thì dẫn đến việc
+các hàm hoạt động sai
+
+
+
+- Data type "struct drink" có 5 thuộc tính:
+    ID, NAME, TYPE, UNIT, PRICE
++ ID: có dạng 2 chữ cái đầu viết tắt cho TYPE. VD: BB0369
++ NAME: tên đồ uống
++ TYPE: Loại đồ uống: coffee/tea/boba
++ UNIT: mililead
++ PRICE: giá tiền cho đồ uống đó
+
+
+Có rất nhiều function, và mỗi cái có 1 công dụng khác nhau.
+Mình sẽ giải thích từng function:
+
+1. void input_drink(char *id, char *name, char *type, char *unit, unsigned long price)
+- function này nhận vào 5 parameters / 5 biến, là 5 thuộc tính của data type "struct drink"
+- vd cách dùng: input_drink("BB0369", "Tra sua", "boba", "ml", 30000);
+- nó sẽ lưu 1 đồ uống vào trong biến data, và tăng drinks_count lên 1 đơn vị
+
+2. void print_a_drink(struct drink d)
+- function này dùng để in ra dữ liệu chứa trong "struct drink", in ra các thuộc tính của MỘT đồ uống.
+- cách dùng: vd: print_a_drink(data[0]);
+
+3. void print_list()
+- in ra danh sách CÁC đồ uống
+- có 1 vòng lặp, mỗi lần lặp sẽ gọi hàm print_a_drink() 1 lần
+- cách dùng: chỉ việc gọi như sau: print_list();
+
+4. void delete_a_drink(char *id)
+- xóa 1 đồ uống khỏi mảng data dựa theo ID của đồ uống
+- cách dùng: vd: delete_a_drink("BB0369");
+
+5. void modify_name(char *id, char *new_name)
+- sửa tên của 1 đồ uống
+- cách dùng: modify_name("BB0369", "Tra sua Da");
+
+6. void modify_price(char *id, unsigned long new_price)
+- sửa giá thành của 1 đồ uống dựa theo ID của nó
+- cách dùng: modify_price("BB0369", 36900);
+
+7. void sort_by_name()
+- sắp xếp mảng data, xếp các đồ uống theo thứ tự TĂNG DẦN (ascending) dựa theo tên của đồ uống
+- cách dùng: chỉ việc gọi: sort_by_name();
+
+8. void sort_by_type()
+- xếp đồ uống theo tt GIẢM DẦN (descending) dựa theo TYPE của đồ uống
+- cách dùng tương tự các hàm sort khác
+
+9. void sort_by_price()
+- xếp đồ uống theo tt TĂNG DẦN dựa theo GIÁ thành của đồ uống
+- cách dùng tương tự các hàm sort khác
+
+10. void sort_by_id()
+- xếp đồ uống theo tt TĂNG DẦN dựa theo ID của đồ uống
+- cách dùng tương tự các hàm sort khác
+
+11. void search_by_price_range(unsigned long min, unsigned long max)
+- in ra màn hình danh sách theo giá tiền trong 1 khoảng nào đó
+- vd: search_by_price_range(10000, 20000);
+
+12. unsigned long get_average_price()
+- TRẢ VỀ giá tiền trung bình của các loại đồ uống có trong mảng data
+- vd: unsigned long a = get_average_price();
+
+13. unsigned long get_highest_price()
+- giống hàm trên chỉ khác là trả về giá tiền lớn nhất
+
+14. unsigned long get_lowest_price()
+- giống hàm trên chỉ khác là trả về giá tiền nhỏ nhất

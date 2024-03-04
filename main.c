@@ -66,7 +66,6 @@ void delete_a_drink(char *id) {
                 data[j] = data[j+1];
             }
             drinks_count--;
-
         }
     }    
 }
@@ -119,6 +118,7 @@ void modify_price(char *id, unsigned long new_price) {
 // sorts
 // ---------------------------------------------
 void sort_by_name() {
+    // ascending
     int i, j;
     struct drink t;
     for (i = 0; i < drinks_count; i++)
@@ -187,7 +187,6 @@ void sort_by_id() {
 // ---------------------------------------------
 
 void search_by_price_range(unsigned long min, unsigned long max) {
-    sort_by_price();
     int i;
     for (i = 0; i < drinks_count; i++)
     {
